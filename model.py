@@ -15,8 +15,7 @@ os.environ['LD_LIBRARY_PATH'] =  cuda_install_dir
      
 # Load the ctranslate model
 model_device = 'cuda' if torch.cuda.is_available() else 'cpu'
-# Change the location to the folder where your ctranslate model exists 
-generator = ctranslate2.Generator("/mnt/ct2_int8", device=model_device)
+generator = ctranslate2.Generator("/mnt/", device=model_device)
      
 # load the tokenizer
 model_id = 'tiiuae/falcon-7b'
@@ -25,7 +24,7 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model_id)
 prompt_template = f"Summarize the chat dialogue:\n{{dialogue}}\n---\nSummary:\n"
      
 #Generate the output from the LLM
-def generate(prompt: str = None, new_tokens: int = 200):
+def generate(prompt: str = None):
     if prompt is None:
         return 'Please provide a prompt.'
             
@@ -33,6 +32,7 @@ def generate(prompt: str = None, new_tokens: int = 200):
     prompt = prompt_template.format(dialogue=prompt)
     # Tokenize the prompt
     tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(prompt))
+    new_tokens = 200
     max_length = len(tokens) + new_tokens
     tokens_per_sec = 0
     start_time = time.time()
