@@ -21,7 +21,7 @@ generator = ctranslate2.Generator("/mnt/", device=model_device)
 model_id = 'tiiuae/falcon-7b'
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_id)
      
-prompt_template = f"Summarize the chat dialogue:\n{{dialogue}}\n---\nSummary:\n"
+prompt_template = f"Summarize the following text:\n{{dialogue}}\n---\nSummary:\n"
      
 #Generate the output from the LLM
 def generate(prompt: str = None):
@@ -36,7 +36,7 @@ def generate(prompt: str = None):
     max_length = len(tokens) + new_tokens
     tokens_per_sec = 0
     start_time = time.time()
-    results = generator.generate_batch([tokens], sampling_topk=10, max_length=max_length, include_prompt_in_result=True)
+    results = generator.generate_batch([tokens], sampling_topk=10, max_length=max_length, include_prompt_in_result=False)
     end_time = time.time()
     output_text = tokenizer.decode(results[0].sequences_ids[0])
     tokens_per_sec = round(new_tokens / (end_time - start_time),3)
