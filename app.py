@@ -36,7 +36,7 @@ os.environ['LD_LIBRARY_PATH'] =  cuda_install_dir
 
 
 # Load the ctranslate model
-model_path = '/domino/datasets/local/SM-LLM/'
+model_path = '/mnt/data/SM-Llama2-chat/llama2-ct'
 hf_model_name = 'tiiuae/falcon-7b'
 model_device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
